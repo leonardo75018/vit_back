@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrganizationTagDto } from './dto/create-organization-tag.dto';
 import { UpdateOrganizationTagDto } from './dto/update-organization-tag.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class OrganizationTagService {
+  constructor(private prismaService: PrismaService) {}
   create(createOrganizationTagDto: CreateOrganizationTagDto) {
-    return 'This action adds a new organizationTag';
+    return this.prismaService.organizationTag.create({
+      data: createOrganizationTagDto,
+    });
   }
 
   findAll() {
-    return `This action returns all organizationTag`;
+    return this.prismaService.organizationTag.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} organizationTag`;
+    return this.prismaService.organizationTag.findUnique({ where: { id } });
   }
 
   update(id: number, updateOrganizationTagDto: UpdateOrganizationTagDto) {
-    return `This action updates a #${id} organizationTag`;
+    return this.prismaService.organizationTag.update({
+      where: { id },
+      data: updateOrganizationTagDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} organizationTag`;
+    return this.prismaService.organizationTag.delete({ where: { id } });
   }
 }
