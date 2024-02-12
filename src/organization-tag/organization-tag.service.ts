@@ -6,7 +6,22 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class OrganizationTagService {
   constructor(private prismaService: PrismaService) {}
-  create(createOrganizationTagDto: CreateOrganizationTagDto) {
+  async create(createOrganizationTagDto: CreateOrganizationTagDto) {
+    const organization = await this.prismaService.organization.findUnique({
+      where: { id: createOrganizationTagDto.organizationId },
+      include: { tags: true },
+    });
+
+    if (!organization) throw new Error('Organization not found');
+    if (organization.tags.length >= 3) {
+      throw new Error('Organization already has 3 tags');
+    }
+
+    const tag = this.prismaService.tag.findUnique({
+      where: { id: createOrganizationTagDto.tagId },
+    });
+    if (!tag) throw new Error('Tag not found');
+
     return this.prismaService.organizationTag.create({
       data: createOrganizationTagDto,
     });
