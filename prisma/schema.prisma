@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+
+model User{
+  id Int @id @default(autoincrement())
+  name String
+  email String
+  password String
+  isAdmin Boolean @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Organization {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  email String 
+  password String
+  location String
+  phoneNumber Int
+  description String
+  webSiteUrl String
+  tags OrganizationTag[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+model Tag{
+  id Int @id @default(autoincrement())
+  name String
+  issueTags IssueTag[]
+  organizationTags   OrganizationTag[]
+}
+
+model Issue {
+  id Int @id @default(autoincrement())
+  name String
+  tags   IssueTag[]
+}
+
+model IssueTag{
+  id Int @id @default(autoincrement())
+  issue Issue @relation(fields: [issueId], references: [id])
+  tag Tag @relation(fields: [tagId], references: [id])
+
+  issueId Int 
+  tagId Int
+}
+
+model OrganizationTag{
+  id Int @id @default(autoincrement())
+  organization Organization  @relation(fields: [organizationId], references: [id])
+  tag Tag @relation(fields: [tagId], references: [id])
+
+  organizationId Int 
+  tagId Int 
+
+  createdAt DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}
+
+
+
+
+
+
+
+
