@@ -12,7 +12,7 @@ import { CreateOrganizationTagDto } from './dto/create-organization-tag.dto';
 import { UpdateOrganizationTagDto } from './dto/update-organization-tag.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('Organization-tag')
+@Controller('organization-tags')
 @ApiTags('OrganizationTag')
 export class OrganizationTagController {
   constructor(

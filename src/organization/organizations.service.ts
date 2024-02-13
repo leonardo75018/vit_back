@@ -14,7 +14,11 @@ export class OrganizationsService {
   }
 
   findAll() {
-    return this.prisma.organization.findMany();
+    return this.prisma.organization.findMany({
+      include: {
+        tags: {},
+      },
+    });
   }
 
   findOne(id: number) {
@@ -34,6 +38,8 @@ export class OrganizationsService {
         tags: true,
       },
     });
+
+    console.log(issue);
 
     if (issue?.tags) {
       const organizations = this.prisma.organization.findMany({

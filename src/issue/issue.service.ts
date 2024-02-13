@@ -11,7 +11,11 @@ export class IssueService {
   }
 
   findAll() {
-    return this.prismaService.issue.findMany();
+    return this.prismaService.issue.findMany({
+      include: {
+        tags: {},
+      },
+    });
   }
 
   findOne(id: number) {

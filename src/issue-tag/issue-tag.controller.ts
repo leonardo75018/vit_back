@@ -12,7 +12,7 @@ import { CreateIssueTagDto } from './dto/create-issue-tag.dto';
 import { UpdateIssueTagDto } from './dto/update-issue-tag.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('issue-tag')
+@Controller('issuetags')
 @ApiTags('Issue-tag')
 export class IssueTagController {
   constructor(private readonly issueTagService: IssueTagService) {}
