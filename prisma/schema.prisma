@@ -92,7 +92,7 @@ model OrganizationInformationsComplementaryTag{
   OrganizationInformationsComplementaryId Int  
 
   tag Tag @relation(fields: [tagId], references: [id])
-  tagId Int  @unique
+  tagId Int 
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
